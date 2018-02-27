@@ -1,0 +1,96 @@
+﻿@using System.Data;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -  浙江理工大学资产经营有限责任公司</title>
+    @Styles.Render("~/Content/Fcss")
+    @RenderSection("style", required: false)
+</head>
+<body>
+    <nav class="nav1 navbar-fixed-top">
+
+        <div id="header">
+            <div class="w1200_center">
+                <div id="logo">
+                    <a href="/Home/Index">
+                        <img src="/img/logo1.jpg" class="logo3">
+                        <img src="~/img/logo.jpg" class="logo2">
+                        <img src="~/img/logo3.png" class="logo1">
+                    </a>
+                </div>
+                <div id="top_right">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="true">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                </div>
+                <div id="clear">
+                </div>
+            </div>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="background-color: white;">
+            <div class="w1200_center">
+                <ul class="nav navbar-nav">
+                    @{
+                    int pid = int.Parse(ViewData["category_id"].ToString()) / 10;
+                    if (ViewData["category"] != null)
+                    {
+                        DataTable dt = (DataTable)ViewData["category"];
+                        int max = Convert.ToInt32(dt.Compute("max(parentid)", ""));
+                        int liwidth = 100 / (max + 1);
+                            <li style="width:@liwidth%" @(pid == 0 ? "class=active" : "")>@Html.ActionLink("首页", "Index")</li>
+
+                                    for (int i = 1; i <= max; i++)
+                                    {
+                                        var dr = dt.Select("parentid=" + i);
+                                        string active = (pid == i) ? "active" : "";
+                                        if (dr.Length == 1)
+                                        {
+                                    <li class="@active" style="width:@liwidth%">@Html.ActionLink(dr[0]["categoryname"].ToString(), "Theme", new { id = dr[0]["id"] })</li>
+                                         }
+                                        else
+                                        {
+                                    <li class="dropdown  @active" style="width:@liwidth%">
+                                        <a href="/Home/Theme?id=@dr[0]["id"]" class="dropdown-toggle"  data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@dr[0]["categoryname"]<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            @for (int j = 1; j < dr.Length; j++){
+                                                <li>@Html.ActionLink(dr[j]["categoryname"].ToString(), "Theme", new { id = dr[j]["id"] })</li>
+                        }
+                                        </ul>
+                                    </li>
+                            }
+                        }
+                    }
+                    }
+                </ul>
+            </div>
+            </div><!-- /.navbar-collapse -->
+
+        </nav>
+           
+        @Html.Partial("_PathPartial")
+        @RenderBody()
+
+    <div id="footerblock">
+        <div class="info">
+            @DateTime.Now.Year -  浙江理工大学资产经营有限责任公司
+        </div>
+        <div id="clear">
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

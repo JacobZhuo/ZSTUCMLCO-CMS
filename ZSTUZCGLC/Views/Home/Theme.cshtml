@@ -1,0 +1,34 @@
+﻿@model PagedList<ZSTUZCGLC.Models.ThemeViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="main_box">
+    <div class="nr_box">
+        <ul class="event_list">
+             
+                @foreach (var item in Model)
+                {
+            <li>
+                <p class="datetime"><strong>@item.edittime.Day</strong><b>@item.edittime.ToString("yyyy-MM")</b></p>
+                <div class="cnt">
+                    @Html.ActionLink(item.title,"Detail",new { id=@item.id},new {@class="bt"})
+                    <p class="summary">
+                        @item.summary...
+                    </p>
+                </div>
+                <div id="clear"></div>
+            </li>
+                 }
+                
+            <div id="clear"></div>
+        </ul>
+        <div class="listpage" style="padding-left:10px;">
+            @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "page", ContainerTagName = "ul", CssClass = "pagination", CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>", DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>", PagerItemTemplate = "<li>{0}</li>", Id = "bootstrappager" })
+            
+        </div>
+
+        <div id="clear"></div>
+    </div>
+    <div id="clear"></div>
+</div>

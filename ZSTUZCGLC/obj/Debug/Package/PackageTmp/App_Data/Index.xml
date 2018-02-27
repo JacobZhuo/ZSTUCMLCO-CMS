@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<banner>
+  <img>
+    <id>25</id>
+    <title>新闻标题1321312323231</title>
+    <url>http://localhost:50032/Upload/Images/2144742248.JPG</url>
+  </img>
+  <img>
+    <id>33</id>
+    <title>通知公告1</title>
+    <url>http://localhost:50032/Upload/Images/535289666.JPG</url>
+  </img>
+  <img>
+    <id>30</id>
+    <title>新闻标题新闻标题新闻标题新闻标题标题 </title>
+    <url>http://localhost:50032/Upload/Images/202686559.jpg</url>
+  </img>
+  <img>
+    <id>32</id>
+    <title>新闻标题新闻标题新闻标题新闻标题</title>
+    <url>http://localhost:50032/Upload/Images/1410500459.JPG</url>
+  </img>
+</banner>

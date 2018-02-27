@@ -1,0 +1,38 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@model PagedList<ZSTUZCGLC.Models.ArticleViewModel>
+@{
+    ViewBag.Title = "文章管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="table-content">
+    <form method="post">
+        <button class="btn btn-default top-right" onclick="location.href='../Manage/Edit/0'" type="button">新增</button>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>标题</th>
+                    <th>栏目</th>
+                    <th>编辑时间</th>
+                    <th>操作人</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr onclick="location.href='../Manage/Edit/@item.id'" style="cursor:pointer;">
+                        <th scope="row">@item.id</th>
+                        <td>@item.title</td>
+                        <td>@item.categoryname</td>
+                        <td>@item.edittime</td>
+                        <td>
+                            @item.username<input type="submit" value="删除" name="delete:@item.id" class="btn hover-show btn-warning" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+    @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "id", ContainerTagName = "ul", CssClass = "pagination", CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>", DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>", PagerItemTemplate = "<li>{0}</li>", Id = "bootstrappager"})
+    </div>

@@ -1,0 +1,21 @@
+﻿@model ZSTUZCGLC.Models.DetailViewModel
+@using System.Data;
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";    
+}
+
+<div class="main_box">
+
+    <div class="nr_box_detail">
+        <div id="inside_title">
+             @Model.title
+        </div>
+        <div id="inside_rnewtime">更新时间：@Model.edittime</div>
+        <div id="inside_content">
+            @Html.Raw(Model.content)
+        </div>
+        <div id="clear"></div>
+    </div>
+
+    <div id="clear"></div>
+</div>

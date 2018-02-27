@@ -1,0 +1,45 @@
+﻿@using System.Data;
+@if (Html.ViewContext.RouteData.Values["action"].ToString() != "Index")
+{
+    
+        DataTable dt = (DataTable)ViewData["category"];
+        int pid= int.Parse(ViewData["category_id"].ToString()) / 10;
+        int cid= int.Parse(ViewData["category_id"].ToString()) % 10;
+        string pname = dt.Select("id=" + pid * 10)[0]["categoryname"].ToString();
+        string cname = dt.Select("id="+ViewData["category_id"].ToString())[0]["categoryname"].ToString();        
+    
+    <div class="w1200_center">
+        <ol class="breadcrumb path">
+            <li><span>当前位置：</span></li>
+            <li>@Html.ActionLink("首页", "Index")</li>
+            <li>@Html.ActionLink(pname, "Theme", new { id = pid * 10 })</li>
+            <li class="active">@cname</li>
+        </ol>
+    </div>
+
+<nav class="nav2">
+    <div class="container-fluid">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+                @cname<span class="glyphicon glyphicon-chevron-down down-arrow" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="w1200_center">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                <ul class="nav navbar-nav">
+                    @{
+                        var dr = dt.Select("parentid=" + pid);
+                        for (int i = 0; i < dr.Length; i++)
+                        {
+                            <li @(cid == i ? "class=active" : "")>@Html.ActionLink(dr[i]["categoryname"].ToString(), "Theme", new { id = dr[i]["id"] })</li>
+                        }
+                    }
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+}

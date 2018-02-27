@@ -1,0 +1,103 @@
+body {
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 500px;
+}*/
+.login-area{
+    max-width:280px;
+}
+body .navbar{
+    border-radius: 0;
+    border-right-width: 0 0 1px;
+}
+.table-content{
+    padding: 0 50px;
+}
+.hover-show{
+    float: right;
+    opacity: 0;
+}
+tr:hover .hover-show{
+opacity: 1;
+}
+li.banner:hover .hover-show{
+opacity: 1;
+}
+.clear{
+    clear:both;
+    height:0px;
+}
+.top-right{
+    float: right;
+}
+.edit-content{
+    width:70%;
+    margin:auto;
+}
+#editor{
+    height:500px;   
+}
+
+  #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; display: inline-block;}
+  #sortable li.banner {     
+    padding: 9px 14px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;}
+    #sortable li span {
+        white-space: nowrap;
+    }
+  .img-pre{
+    width: 100%;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    margin-bottom:9px;
+  }
+.flick-title {
+  padding:0px 0px;
+  font-size:1.778em;
+  /*line-height:1.995em;*/
+  text-align:center;
+  position:absolute;
+  color:#fff;
+  top: 120px;
+}
+span.flick-block-text {
+  padding:6px 9px;
+  background-color:rgba(0, 0, 0, 0.6)
+}
+.introduction{
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+    float: right;
+}
+.introduction input{
+    float: right;
+    display: block;
+    margin-bottom: 20px;
+}
+.btn-mini{
+    padding:0;
+}

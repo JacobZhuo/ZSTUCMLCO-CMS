@@ -1,0 +1,125 @@
+﻿@model ZSTUZCGLC.Models.HomeViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "首页管理";
+}
+
+@using (Html.BeginForm("Home", "Manage", FormMethod.Post, new { role = "form" }))
+{
+<ul id="sortable">
+    @foreach (var item in Model.banner)
+    {
+        var index = Model.banner.IndexOf(item);        
+    <li class="banner" id="@index">
+        <p>效果预览<input type="submit" value="删除" name="remove:@index" class="btn hover-show btn-danger btn-mini"/></p>
+        <div class="img-pre" id="img-pre_@(index)"style="background-image:url(@item.imgurl);">
+            <div class="flick-title">
+                <span class="flick-block-text">@item.title</span>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                <select id="first-disabled" class="selectpicker form-control" data-hide-disabled="true" data-live-search="true" title="请选择图片对应的文章" onchange="selectOnchang_@(index)(this)">
+                        <optgroup disabled="disabled" label="disabled">
+                            <option>Hidden</option>
+                        </optgroup>
+                        @{
+                            foreach(var itema in Model.article)
+                            {
+                                if (itema.id == item.id)
+                                {
+                                    <option value="@itema.id" selected>@itema.title</option>
+                                }
+                                else
+                                {
+                                    <option value="@itema.id">@itema.title</option>
+                                }
+                            }
+                        }
+                </select>
+                    <script>
+                        function selectOnchang_@(index)(obj) {
+                            document.getElementById("banner_@(index)__id").value = obj.options[obj.selectedIndex].value;
+                            document.getElementById("banner_@(index)__title").value = obj.options[obj.selectedIndex].innerText;
+                            document.getElementById("img-pre_@(index)").getElementsByTagName("span")[0].innerText = obj.options[obj.selectedIndex].innerText;
+                        }                       
+                    </script>
+                </div>
+                <div class="col-md-3" ><button type="button" class="btn btn-info" id="upload_@(index)">上传图片</button> </div>
+            </div>
+        </div>
+        <div style="display:none">
+            @Html.TextBoxFor(m=>m.banner[index].id)
+            @Html.TextBoxFor(m => m.banner[index].title)
+            @Html.TextBoxFor(m => m.banner[index].imgurl)
+            @Html.TextBoxFor(m => m.banner[index].indexd,new { @class="indexd" })
+        </div>
+        </li>
+    } 
+    <li>
+        <input type="submit" class="btn btn-default" value="增加" name="add"/>
+    </li>
+</ul>
+<div class="introduction">
+    <input type="submit" value="保存" class="btn btn-success" name="save" onclick="SetIndexd()"/>
+    <div class="clear"></div>
+
+    <p>
+        上下拖动图片可改变首页图片新闻轮播的顺序，从上至下为第一张至最后一张。点击最下方增加以增加新的图片新闻。
+    </p>
+    <p>修改之后务必点击保存方可生效！</p>
+
+
+</div>
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/j-ui")
+@Scripts.Render("~/bundles/plupload")
+    <script>
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+        function SetIndexd(){
+            var indexd = document.getElementsByClassName("indexd");
+            for (var i=0;i<indexd.length;i++) {
+                indexd[i].value = i;
+            }
+        }        
+    </script>
+<script>
+    var uploaders=new Array();
+    initUploaders = function (uploaders) {
+        console.log("inituploader");
+        $(".banner").each(function () {
+            var el = $(this);
+            var button = "upload_" + el.attr("id");
+            console.log("init id" + el.attr("id"));
+            var uploader = new plupload.Uploader({
+                browse_button: button,
+                url: '../uploadImg',
+                flash_swf_url: 'script/plupload/Moxie.swf',
+                sliverlight_xap_url: 'script/plupload/Moxie.xap',
+                filters: {
+                    mime_types: [
+                        { title: "图片文件", extensions: "jpg,gif,png,bmp" }
+                    ]
+                },
+            });
+            uploader.init();
+            uploader.bind('FilesAdded', function (uploader, file) {
+                uploader.start();
+            });
+            uploader.bind('FileUploaded', function (uploader, files, data) {
+                var url = data.response;
+                console.log(url);
+                console.log(el.attr("id"));
+                document.getElementById('img-pre_' + el.attr("id")).style.backgroundImage = "url(" + url + ")";
+                document.getElementById("banner_" + el.attr("id") + "__imgurl").value = url;
+
+            });
+        });
+    }
+    initUploaders(uploaders);
+</script>
+    }

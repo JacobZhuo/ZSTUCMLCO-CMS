@@ -1,0 +1,129 @@
+﻿@model List<ZSTUZCGLC.Models.IndexViewModel>
+@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="flicker-example flickerplate animate-transition-slide flicker-theme-light" data-block-text="false" data-flick-position="0">
+
+    <div class="arrow-navigation left">
+        <div class="arrow"></div>
+    </div>
+    <div class="arrow-navigation right">
+        <div class="arrow"></div>
+    </div>
+    <ul class="flicks" style="left:-000%;">
+        <li data-background="/img/01.png" class="first-flick" style="background-image: url(&quot;/img/01.png&quot;);">
+            <div class="flick-inner">
+                <div class="flick-content"></div>
+            </div>
+        </li>
+        <li data-background="/img/02.jpg" style="background-image: url(&quot;/img/02.jpg&quot;);">
+            <div class="flick-inner">
+                <div class="flick-content"></div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="index-news">
+    <div class="w1200_center">
+        @{ 
+            List<ZSTUZCGLC.Models.IndexViewModel> left = new List<ZSTUZCGLC.Models.IndexViewModel>();
+            List<ZSTUZCGLC.Models.IndexViewModel> right = new List<ZSTUZCGLC.Models.IndexViewModel>();
+            foreach (var item in Model)
+            {
+                if (item.category_id == 30) {
+                    left.Add(item);
+                }
+                else
+                {
+                    right.Add(item);
+                }
+            }
+        }
+        <div class="l">
+            <div class="tips">
+                <p class="en">NEWS</p>
+                <p>资产管理公司新闻动态</p>
+                @Html.ActionLink("更多","Theme",new { id = 30 },new { @class="more", target="_blank"})                
+            </div>
+            <div class="list">                
+                <ul class="ind_date_news_list">
+                    @foreach (var l in left)
+                    {
+                    <li>
+                        <p class="datetime"><strong>@l.edittime.Day</strong><b>@l.edittime.ToString("yyyy-MM")</b></p>
+                        <div class="cnt">
+                            @Html.ActionLink(@l.title,"Detail",new {id=l.id},new { @class = "bt" })                            
+                            <p class="summary">@l.summary...</p>
+                        </div>
+                        <div id="clear"></div>
+                    </li>
+                    }
+                    <div id="clear"></div>
+                </ul>
+            </div>
+        </div>
+        <div class="r">
+            <div class="tips">
+                <p class="en">INFORM</p>
+                <p>资产管理公司通知公告</p>
+                @Html.ActionLink("更多", "Theme", new { id = 40 }, new { @class = "more", target = "_blank" })
+            </div>
+            <div class="list">
+
+                <ul class="ind_date_news_list">
+                        @foreach (var r in right)
+                    {
+                    <li>
+                        <p class="datetime"><strong>@r.edittime.Day</strong><b>@r.edittime.ToString("yyyy-MM")</b></p>
+                        <div class="cnt">
+                            @Html.ActionLink(@r.title, "Detail", new { id = r.id }, new { @class = "bt" })
+                            <p class="summary">@r.summary...</p>
+                        </div>
+                        <div id="clear"></div>
+                    </li>
+                    }
+
+                    <div id="clear"></div>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="clear"></div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/Slide")
+    <script>
+		$(document).ready(function(){
+
+			$('.flicker-example').flicker();
+		});
+    </script>
+    <script>
+				$( document ).ready(function() {
+					$.ajaxSetup({
+						cache: false
+					});
+					$( '.sidebar' ).simpleSidebar({
+						settings: {
+							opener: '#open-sb',
+							wrapper: '.wrapper',
+							animation: {
+								duration: 500,
+								easing: 'easeOutQuint'
+							}
+						},
+						sidebar: {
+							align: 'right',
+							width: 200,
+							closingLinks: 'a',
+						}
+					});
+				});
+</script>
+
+}
+

@@ -1,0 +1,109 @@
+﻿@model ZSTUZCGLC.Models.IndexViewModel
+@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="flicker-example flickerplate animate-transition-slide flicker-theme-light" data-block-text="false" data-flick-position="0">
+
+    <div class="arrow-navigation left">
+        <div class="arrow"></div>
+    </div>
+    <div class="arrow-navigation right">
+        <div class="arrow"></div>
+    </div>
+    <ul class="flicks" style="left:-000%;">
+        @foreach (var item in Model.banner)
+        {
+        <li data-background="@item.imgurl" class="first-flick" style="cursor:pointer; background-image: url(&quot;@item.imgurl&quot;);" onclick="location.href='../Home/Detail/@item.id'" >
+            <div class="flick-title"><span class="flick-block-text">@item.title</span></div>
+        </li>
+        }
+    </ul>
+</div>
+
+<div class="index-news">
+    <div class="w1200_center">
+
+        <div class="l side">
+            <div class="tips">
+                <p class="en">业界动态</p>                
+                @Html.ActionLink("更多","Theme",new { id = 31 },new { @class="more", target="_blank"})                
+            </div>
+            <div class="list">                
+                <ul class="ind_date_news_list">
+                    @foreach (var l in Model.left)
+                    {
+                    <li>                       
+                        <div class="cnt">
+                            @Html.ActionLink(@l.title,"Detail",new {id=l.id},new { @class = "bt" })                            
+                            <p class="summary">@l.summary...</p>
+                        </div>
+                        <div id="clear"></div>
+                    </li>
+                    }
+                    <div id="clear"></div>
+                </ul>
+            </div>
+        </div>
+        <div class="m">
+            <div class="tips">
+                <p class="en">新闻动态</p>
+                <p>资产管理公司最新动态</p>
+                @Html.ActionLink("更多", "Theme", new { id = 30 }, new { @class = "more", target = "_blank" })
+            </div>
+            <div class="list">
+
+                <ul class="ind_date_news_list">
+                        @foreach (var m in Model.middle)
+                    {
+                    <li>
+                        <p class="datetime"><strong>@m.edittime.Day</strong><b>@m.edittime.ToString("yyyy-MM")</b></p>
+                        <div class="cnt">
+                            @Html.ActionLink(@m.title, "Detail", new { id = m.id }, new { @class = "bt" })
+                            <p class="summary">@m.summary...</p>
+                        </div>
+                        <div id="clear"></div>
+                    </li>
+                    }
+
+                    <div id="clear"></div>
+                </ul>
+            </div>
+        </div>
+        <div class="r side">
+            <div class="tips">
+                <p class="en">通知公告</p>
+                
+                @Html.ActionLink("更多", "Theme", new { id = 40 }, new { @class = "more", target = "_blank" })
+            </div>
+            <div class="list">
+                <ul class="ind_date_news_list">
+                    @foreach (var r in Model.right)
+                    {
+                        <li>
+                            <div class="cnt">
+                                @Html.ActionLink(@r.title, "Detail", new { id = r.id }, new { @class = "bt" })
+                                <p class="summary">@r.summary...</p>
+                            </div>
+                            <div id="clear"></div>
+                        </li>
+                    }
+                    <div id="clear"></div>
+                </ul>
+            </div>
+        </div>
+        <div id="clear"></div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/Slide")
+    <script>
+		$(document).ready(function(){
+
+			$('.flicker-example').flicker();
+		});
+    </script>
+
+}
+
